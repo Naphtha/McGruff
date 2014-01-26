@@ -32,4 +32,5 @@ for line in tempfile:
 		print line
 
 
+
 tempfile.close()
