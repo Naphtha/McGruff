@@ -29,7 +29,8 @@ for line in tempfile:
 	matches = regex.search(line)
 
 	if matches:
-		print line
+		print line.split("<p>")
+		print matches.group()
 
 
 
