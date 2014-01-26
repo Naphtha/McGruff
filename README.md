@@ -1,7 +1,7 @@
 # McGruff #
 
 
-A simple project to chart/map crime in various cities using crime logs. Currently only supporting Davis, CA.
+A simple project to chart/map crime in various cities using crime logs. Currently only supporting Davis, CA. Also a fun way to mess around with web scraping and regex in Python.
 
 
 ## Goals ##

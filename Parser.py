@@ -1,5 +1,6 @@
 
 from HTMLParser import HTMLParser
+import re
 
 f = open("log.html", 'r')
 tempfile = open("tempLog.tmp", 'w')
@@ -9,22 +10,26 @@ flag = 0
 for line in f:
 
 	if "<h1>Daily Activity Log " in line:
-		print line
 		tempfile.write(line)
 		
 	if "*==========================================================================" in line:
-		print line
 		line = line.replace("*==========================================================================", "\n\n")
 		tempfile.write(line)
 
 f.close()
 tempfile.close()
 
-# tempfile = open("tempLog.tmp", 'r')
+tempfile = open("tempLog.tmp", 'r')
 
-# for line in tempfile:
+regex = re.compile('\d{2,2}:\d{2,2}')
 
-# 	for word in line:
 
-# 		print word
-# tempfile.close()
+for line in tempfile:
+
+	matches = regex.search(line)
+
+	if matches:
+		print line
+
+
+tempfile.close()
