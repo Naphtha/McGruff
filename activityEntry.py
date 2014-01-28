@@ -1,4 +1,4 @@
-class ActivityEntry(self):
+class ActivityEntry():
 
 
 	#unformatted entry is the HTML line that comes direct from parser
@@ -6,6 +6,6 @@ class ActivityEntry(self):
 	def __init__(self, unformattedEntry):
 
 		temp = unformattedEntry.split('<p>')
-		temp = temp.split('</p>')
+		print temp
 
 		

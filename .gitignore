@@ -1,3 +1,10 @@
 .DS_Store
+
+# the scraped html log files
 *.html
+
+# the temp text files
 *.tmp
+
+#the compiled python code for custom classes
+*.pyc
