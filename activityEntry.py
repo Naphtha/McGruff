@@ -3,9 +3,10 @@ class ActivityEntry():
 
 	#unformatted entry is the HTML line that comes direct from parser
 
-	def __init__(self, unformattedEntry):
+	def __init__(self, time, desc):
 
-		temp = unformattedEntry.split('<p>')
+		self.time = time
+		temp = desc.split('<p>')
 		print temp
 
 		
