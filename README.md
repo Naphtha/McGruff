@@ -13,10 +13,12 @@ A small dashboard of possibilities is here [Crime Plots](http://naphtha.github.i
 
 3. Maintain text file of objects consisting of information from each event on the Crime Log. This will probably have a hard limit of 10 for a while.
 
-4. Use a free maps api that can generate event pins on an overlay of Davis. Avoiding Google Maps.
+4. Build some cute graphs with [D3](http://d3js.org/)
 
-5. Add support to differentiate pins e.g. time passed since event
+5. Use a free maps api that can generate event pins on an overlay of Davis. Avoiding Google Maps.
 
-6. Build out interface that will allow user to vary hard limit and regenerate the map.
+6. Add support to differentiate pins e.g. time passed since event
 
-7. Add more cities?
+7. Build out interface that will allow user to vary hard limit and regenerate the map.
+
+8. Add more cities?
