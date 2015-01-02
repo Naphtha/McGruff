@@ -13,3 +13,6 @@
 \#*
 .#*
 *~
+
+# Json objects
+*.json

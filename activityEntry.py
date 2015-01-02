@@ -31,7 +31,8 @@ class ActivityEntry():
                                         break
                                         
                 self.activity_num = activity_num
-                self.activity = possible_num.strip()
+                
+                self.activity = possible_num.split("(",1)[0].strip()
         
                 self.desc = temp[1]
                 
