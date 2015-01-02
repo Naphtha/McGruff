@@ -55,7 +55,7 @@ json_file = open( "".join( (file_name,".json") ), 'w')
 
 # use to debug
 # json.dump({log_date:[activity_log]}, json_file, indent=1)
-json.dump({log_date:[activity_log]}, json_file, indent=1)
+json.dump({log_date:[activity_log]}, json_file)
 
 json_file.close()
 
