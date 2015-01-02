@@ -8,3 +8,8 @@
 
 #the compiled python code for custom classes
 *.pyc
+
+# Emacs Temp Files
+\#*
+.#*
+*~
