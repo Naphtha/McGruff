@@ -3,11 +3,11 @@
 
 A simple project to chart/map crime in various cities using crime logs. Currently only supporting Davis, CA. Also a fun way to mess around with web scraping and regex in Python.
 
-A small dashboard of possibilities is here [Crime Plots](http://naphtha.github.io/McGruff)
+A small dashboard of possibilities is here [Crime Plots](http://naphtha.github.io/McGruff).
 
 ## Goals ##
 
-1. Write a parser to that can read the HTML that is available on [Davis Crime Log](http://police.cityofdavis.org/daily-activity-log)
+1. Write a parser to that can read the HTML that is available on [Davis Crime Log](http://police.cityofdavis.org/daily-activity-log).
 
 2. Create a web-scraper to pull down new activity logs daily.
 
