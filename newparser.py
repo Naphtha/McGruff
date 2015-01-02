@@ -1,7 +1,7 @@
 
 import re
 
-from ActivityEntry import ActivityEntry
+from activityEntry import ActivityEntry
 
 from utils import pairwise
 
