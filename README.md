@@ -7,18 +7,18 @@ A small dashboard of possibilities is here [Crime Plots](http://naphtha.github.i
 
 ## Goals ##
 
-1. [x] Write a parser to that can read the HTML that is available on [Davis Crime Log](http://police.cityofdavis.org/daily-activity-log).
+- [x] Write a parser to that can read the HTML that is available on [Davis Crime Log](http://police.cityofdavis.org/daily-activity-log).
 
-2. [/] Create a web-scraper to pull down new activity logs daily. (Currently just using curl + bash script + cron.)
+- [ ] Create a web-scraper to pull down new activity logs daily. (Currently just using curl + bash script + cron.)
 
-3. [ ] Maintain text file of objects consisting of information from each event on the Crime Log. This will probably have a hard limit of 10 for a while.
+- [ ] Maintain text file of objects consisting of information from each event on the Crime Log. This will probably have a hard limit of 10 for a while.
 
-4. [x] Build some cute graphs with [D3](http://d3js.org/)
+- [x] Build some cute graphs with [D3](http://d3js.org/).
 
-5. [ ] Use a free maps api that can generate event pins on an overlay of Davis. Avoiding Google Maps.
+- [ ] Use a free maps api that can generate event pins on an overlay of Davis. Avoiding Google Maps.
 
-6. [ ] Add support to differentiate pins e.g. time passed since event
+- [ ] Add support to differentiate pins e.g. time passed since event.
 
-7. [ ] Build out interface that will allow user to vary hard limit and regenerate the map.
+- [ ] Build out interative interface that will allow user to do things like vary hard limit and regenerate the map.
 
-8. [ ] Add more cities?
+- [ ] Add more cities.
