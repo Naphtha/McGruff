@@ -11,7 +11,7 @@ A small dashboard of possibilities is here [Crime Plots](http://naphtha.github.i
 
 - [ ] Create a web-scraper to pull down new activity logs daily. (Currently just using curl + bash script + cron.)
 
-- [ ] Maintain text file of objects consisting of information from each event on the Crime Log. This will probably have a hard limit of 10 for a while.
+- [x] Maintain text file of objects consisting of information from each event on the Crime Log. This will probably have a hard limit of 10 for a while.
 
 - [x] Build some cute graphs with [D3](http://d3js.org/).
 
@@ -19,6 +19,6 @@ A small dashboard of possibilities is here [Crime Plots](http://naphtha.github.i
 
 - [ ] Add support to differentiate pins e.g. time passed since event.
 
-- [ ] Build out interative interface that will allow user to do things like vary hard limit and regenerate the map.
+- [ ] Build out interactive interface that will allow user to do things like vary hard limit and regenerate the map.
 
 - [ ] Add more cities.
