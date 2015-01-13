@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 
-<!-- The majority of this code was pulled from this D3 Tutorial: http://bost.ocks.org/mike/bar/2/ -->
-<!-- It was heavily adapted to work with the json objects and timestamp -->
+<!-- Authored by Shawn Shojaie :) -->
+
 <style>
 .chart rect {
   fill: steelblue;
@@ -13,37 +13,42 @@
   font: 10px sans-serif;
   text-anchor: end;
 }
-
-
-
 </style>
 
 <svg class="chart"></svg>
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script src="http://code.jquery.com/jquery-1.11.2.min.js" charset="utf-8"></script>
 
+
+
 <script>
 
+var width = 300;
+var barHeight = 15;
 
-var width = 300,
-    barHeight = 15;
-
+// scale the graph
 var x = d3.time.scale().range([0,width]);
   
+// select chart div
 var chart = d3.select(".chart").attr("width", width);
 
+// set up date/time format specifier for d3 processing
 var format = d3.time.format("%H:%M");
 
-// had to get rid of several elements in the json object
-// propogate new format down
-// remove date and make it simple list of activities
 
-
-d3.json("log.json", function(data){
-
+// load from file
+d3.json("log.json", function(jsonfile){
 //console.log(data);
 
-data = data.Dec312014[0];
+var data = new Array();
+
+// for each data in the log file
+for( i in jsonfile ){
+
+  data = data.concat(jsonfile[i][0]);
+
+}
+
 
 //data = JSON.parse( data );
 
@@ -71,7 +76,7 @@ function type(d){
 </script>
 
 <div>
-  This chart displays a bar with a height corresponding to the time of day the crime was reported. The labels are the type of crime committed. The majority of this code was pulled directly from a D3 tutorial by Mike Bostock. It was heavily adapted to work with timestamps and imported JSON data from my parsing script.
+  This chart displays a bar with a height corresponding to the time of day the crime was reported. The labels are the type of crime committed.
 </div>
 
 
