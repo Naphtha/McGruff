@@ -42,7 +42,7 @@ activity_log = []
 
 # take pairs of items from list and parse
 for time, event in pairwise(split_log):
-	temp_entry = ActivityEntry(time, event)
+	temp_entry = ActivityEntry(time, event, log_date)
 	# append attributes to list
 	activity_log.append( {"activity_num":temp_entry.activity_num, "time":temp_entry.time, "activity":temp_entry.activity, "desc":temp_entry.desc} )
 

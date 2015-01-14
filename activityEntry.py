@@ -10,9 +10,9 @@ class ActivityEntry():
                 print self.activity
                 print self.desc
 
-	def __init__(self, time, desc):
+	def __init__(self, time, desc, log_date):
 
-		self.time = time
+		self.time = log_date + " " + time
 		temp = re.split('</*p>', desc)
 
                 # default num
@@ -36,7 +36,7 @@ class ActivityEntry():
         
                 self.desc = temp[1]
                 
-
+                self.print_vals()
 
 
 
