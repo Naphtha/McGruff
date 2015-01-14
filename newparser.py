@@ -52,7 +52,7 @@ file_name = sys.argv[1].rsplit(".html", 1)[0]
 exists_flag = 0
 
 try:
-	with open( "loga.json", 'r' ) as json_file:
+	with open( "orig.json", 'r' ) as json_file:
 
 		for line in json_file:
 			json_data = json.loads(line)
@@ -65,8 +65,19 @@ except ValueError:
 	pass
 
 if( 0 == exists_flag ):
-	with open("loga.json", "a") as json_file:
+	with open("orig.json", "a") as json_file:
 		json_file.write( "{}\n".format( json.dumps({log_date:activity_log}) ) )
+
+
+with open("orig.json", "r+" ) as json_file:
+	with open("log.json", "w") as temp_file:
+		first = json_file.readline()
+		temp_file.write( first[0:-2] + '\n' )
+		for line in json_file:
+			temp_file.write( ',' + line[1:-2] + '\n' )
+		temp_file.write('}\n')
+
+
 
 
 
