@@ -4,15 +4,39 @@
 <!-- Authored by Shawn Shojaie :) -->
 
 <style>
-.chart rect {
-  fill: steelblue;
+
+svg {
+  margin: 1rem;
 }
 
+.chart rect {
+  fill: cornflowerblue;
+}
 .chart text {
   fill: black;
   font: 10px sans-serif;
   text-anchor: end;
 }
+
+.x_axis path, line{
+  shape-rendering: crispEdges;
+  fill: none;
+  stroke: black;
+}
+
+.hour_x_axis line{
+  shape-rendering: crispEdges;
+  fill: none;
+  stroke: black;
+}
+
+.hour_x_axis path{
+  shape-rendering: crispEdges;
+  fill-opacity: .25;
+  fill: green;
+  stroke: none;
+}
+
 </style>
 
 <svg class="chart"></svg>
@@ -23,47 +47,79 @@
 
 <script>
 
-var width = 300;
-var barHeight = 15;
-
-// scale the graph
-var x = d3.time.scale().range([0,width]);
+var height = 500;
+var padding = 50;
+var barWidth = 20;
   
 // select chart div
-var chart = d3.select(".chart").attr("width", width);
+var chart = d3.select(".chart").attr("height", height);
 
 // set up date/time format specifier for d3 processing
-var format = d3.time.format("%H:%M");
+var format = d3.time.format("%b%d%Y %H:%M");
 
 
 // load from file
 d3.json("log.json", function(jsonfile){
-//console.log(data);
 
-var data = new Array();
+  var data = new Array();
+  // for each date in the log file
+  for( i in jsonfile ){
+    data = data.concat(jsonfile[i]);
+  }
 
-// for each data in the log file
-for( i in jsonfile ){
+  // // scale the graph
+  // var x = d3.time.scale()
+  // .domain([])
+  // .range([0,height]);
 
-  data = data.concat(jsonfile[i][0]);
+  // use custom date parser as accessor for domain
+  var x_scale = d3.time.scale()
+  .range([0, barWidth * data.length])
+  .domain([d3.min(data, function(d){return format.parse(d.time);}), d3.max(data, function(d){return format.parse(d.time);}) ]);
 
-}
+
+  var x_axis = d3.svg.axis()
+  .orient("bottom")
+  .scale(x_scale)
+  .tickFormat(d3.time.format("%b %d %Y %H:%M"))
+  .ticks(d3.time.hour, 6)
+  .tickSize(20);
+
+  var hour_x_axis = d3.svg.axis()
+  .orient("bottom")
+  .scale(x_scale)
+  .ticks(d3.time.hour, 1)
+  .tickFormat(" ")
+  .tickSize(6);
 
 
-//data = JSON.parse( data );
+  chart.attr("width", barWidth * data.length );
+  chart.append("g")
+  .attr("transform", "translate(0," + (height-padding) + ")")
+  .attr("class", "x_axis")
+  .call(x_axis);
 
-x.domain([d3.min(data, function(d){ return format.parse(d.time); }), d3.max(data, function(d){ return format.parse(d.time); })]);
+  chart.append("g")
+  .attr("transform", "translate(0," + (height-padding) + ")")
+  .attr("class", "hour_x_axis")
+  .call(hour_x_axis);
 
-chart.attr("height", barHeight * data.length);
+  chart.selectAll("circle")
+  .data(data)
+  .enter()
+  .append("circle")
+  .attr("cx", function(d){return x_scale(format.parse(d.time))} )
+  .attr("cy", height/2)
+  .attr("r", 2);
 
-var bar = chart.selectAll("g").data(data).enter().append("g").attr("transform", function(d,i){ return "translate(0," + i * barHeight + ")";});
+  // var bar = chart.selectAll("g").data(data).enter().append("g").attr("transform", function(d,i){ return "translate(0," + i * barWidth + ")";});
 
-bar.append("rect").attr("width", function(d){ return x(format.parse(d.time)); }).attr("height", barHeight - 1);
+  // bar.append("rect").attr("height", function(d){ return x(format.parse(d.time)); }).attr("width", barWidth - 1);
 
-bar.append("text").attr("x", width)
-  .attr("y", barHeight - 5)
-  .attr("dy", ".35em")
-  .text(function(d){ return d.activity });
+  // bar.append("text").attr("x", height)
+  //   .attr("y", barWidth - 5)
+  //   .attr("dy", ".35em");
+    //.text(function(d){ return d.activity });
 
 });
 
@@ -76,7 +132,7 @@ function type(d){
 </script>
 
 <div>
-  This chart displays a bar with a height corresponding to the time of day the crime was reported. The labels are the type of crime committed.
+  This chart shows a dot for every crime committed. Each tick mark is one hour.  
 </div>
 
 
