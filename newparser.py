@@ -35,7 +35,6 @@ split_log = time_re.split(line)
 
 # until first item in list is a time discard
 while( None == time_re.match(split_log[0]) ):
-	print split_log[0]
 	split_log.pop(0)
 
 
@@ -50,17 +49,32 @@ for time, event in pairwise(split_log):
 
 file_name = sys.argv[1].rsplit(".html", 1)[0]
 
+exists_flag = 0
+
+try:
+	with open( "loga.json", 'r' ) as json_file:
+
+		for line in json_file:
+			json_data = json.loads(line)
+			try:
+				json_data[log_date]
+				exists_flag = 1
+			except KeyError:
+				pass
+except ValueError:
+	pass
+
+if( 0 == exists_flag ):
+	with open("loga.json", "a") as json_file:
+		json_file.write( "{}\n".format( json.dumps({log_date:activity_log}) ) )
 
 
 
+# json_file = open( "".join( (file_name,".json") ), 'w')
 
-json_file = open( "".join( (file_name,".json") ), 'w')
+# json.dump({log_date:[activity_log]}, json_file, indent=1)
 
-json.dump({log_date:[activity_log]}, json_file, indent=1)
-
-json_file.close()
-
-
+# json_file.close()
 
 
 
