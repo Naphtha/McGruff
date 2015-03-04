@@ -24,6 +24,12 @@ svg {
   stroke: black;
 }
 
+.y_axis path, line{
+  shape-rendering: crispEdges;
+  fill: none;
+  stroke: black;
+}
+
 .hour_x_axis line{
   shape-rendering: crispEdges;
   fill: none;
@@ -47,15 +53,17 @@ svg {
 
 <script>
 
-var height = 500;
+var height = 400;
 var padding = 50;
 var barWidth = 20;
+var margin = {top: 20, bottom: 20, left: 20, right: 20};
   
 // select chart div
-var chart = d3.select(".chart").attr("height", height);
+var chart = d3.select(".chart").attr("height", height + margin.top + margin.bottom);
 
 // set up date/time format specifier for d3 processing
 var format = d3.time.format("%b%d%Y %H:%M");
+var hour_minute = d3.time.format("%H:%M");
 
 
 // load from file
@@ -77,6 +85,9 @@ d3.json("log.json", function(jsonfile){
   .range([0, barWidth * data.length])
   .domain([d3.min(data, function(d){return format.parse(d.time);}), d3.max(data, function(d){return format.parse(d.time);}) ]);
 
+  var y_scale = d3.scale.linear()
+  .range([margin.top, height - padding - margin.bottom])
+  .domain([0,12]);
 
   var x_axis = d3.svg.axis()
   .orient("bottom")
@@ -84,6 +95,12 @@ d3.json("log.json", function(jsonfile){
   .tickFormat(d3.time.format("%b %d %Y %H:%M"))
   .ticks(d3.time.hour, 6)
   .tickSize(20);
+
+  var y_axis = d3.svg.axis()
+  .orient("left")
+  .scale(y_scale)
+  .ticks(12)
+  .tickSize(0);
 
   var hour_x_axis = d3.svg.axis()
   .orient("bottom")
@@ -93,23 +110,29 @@ d3.json("log.json", function(jsonfile){
   .tickSize(6);
 
 
-  chart.attr("width", barWidth * data.length );
+  chart.attr("width", barWidth * data.length + margin.right + margin.left );
+
   chart.append("g")
-  .attr("transform", "translate(0," + (height-padding) + ")")
+  .attr("transform", "translate(20," + (height-padding) + ")")
   .attr("class", "x_axis")
   .call(x_axis);
 
   chart.append("g")
-  .attr("transform", "translate(0," + (height-padding) + ")")
+  .attr("transform", "translate(20," + (height-padding) + ")")
   .attr("class", "hour_x_axis")
   .call(hour_x_axis);
+
+  chart.append("g")
+  .attr("transform", "translate(" + (margin.right) + ",0)")
+  .attr("class", "y_axis")
+  .call(y_axis);
 
   chart.selectAll("circle")
   .data(data)
   .enter()
   .append("circle")
-  .attr("cx", function(d){return x_scale(format.parse(d.time))} )
-  .attr("cy", height/2)
+  .attr("cx", function(d){return x_scale(format.parse(d.time)) + margin.left} )
+  .attr("cy", function(d){return y_scale(   hour_conv(d)  )} )
   .attr("r", 2);
 
   // var bar = chart.selectAll("g").data(data).enter().append("g").attr("transform", function(d,i){ return "translate(0," + i * barWidth + ")";});
@@ -126,6 +149,17 @@ d3.json("log.json", function(jsonfile){
 function type(d){
   d.value = +d.value;
   return d;
+}
+
+function hour_conv(data){
+
+  hour = format.parse(data.time).getHours()
+  hour = hour|0;
+  if(hour > 12){
+    return (24 - hour)|0;
+  }else{
+    return hour|0;
+  }
 }
 
 
