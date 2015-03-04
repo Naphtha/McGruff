@@ -96,12 +96,6 @@ d3.json("log.json", function(jsonfile){
   .ticks(d3.time.hour, 6)
   .tickSize(20);
 
-  var y_axis = d3.svg.axis()
-  .orient("left")
-  .scale(y_scale)
-  .ticks(12)
-  .tickSize(0);
-
   var hour_x_axis = d3.svg.axis()
   .orient("bottom")
   .scale(x_scale)
@@ -121,11 +115,6 @@ d3.json("log.json", function(jsonfile){
   .attr("transform", "translate(20," + (height-padding) + ")")
   .attr("class", "hour_x_axis")
   .call(hour_x_axis);
-
-  chart.append("g")
-  .attr("transform", "translate(" + (margin.right) + ",0)")
-  .attr("class", "y_axis")
-  .call(y_axis);
 
   chart.selectAll("circle")
   .data(data)
