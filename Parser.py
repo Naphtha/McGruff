@@ -24,6 +24,10 @@ for line in f:
 		log_date = temp[0] + temp[1] + temp[2]
                 
 
+	# NOTE: never use RE in html parsing
+	# the webpage's format is awful so instead of writing something that will
+	# stand the test of time, I did this
+	# also as i've noticed the format they upload the logs in is inconsistent so I just hacked this together
 	if re.match('.*\<\s*table', line):
 		event_list = line
 		break
