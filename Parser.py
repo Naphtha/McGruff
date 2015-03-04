@@ -1,4 +1,5 @@
 # runs with python 2.7.5
+# run with python Parser.py <filename>
 
 import re
 import sys
