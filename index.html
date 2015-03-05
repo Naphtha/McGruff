@@ -9,6 +9,11 @@ svg {
   margin: 1rem;
 }
 
+.chart{
+  display: block;
+  margin: auto;
+}
+
 .chart rect {
   fill: cornflowerblue;
 }
@@ -56,6 +61,7 @@ svg {
 var height = 400;
 var padding = 50;
 var barWidth = 20;
+var width = 800;
 var margin = {top: 20, bottom: 20, left: 20, right: 20};
   
 // select chart div
@@ -104,7 +110,7 @@ d3.json("log.json", function(jsonfile){
   .tickSize(6);
 
 
-  chart.attr("width", barWidth * data.length + margin.right + margin.left );
+  chart.attr("width", width + margin.right + margin.left );
 
   chart.append("g")
   .attr("transform", "translate(20," + (height-padding) + ")")
@@ -116,6 +122,14 @@ d3.json("log.json", function(jsonfile){
   .attr("class", "hour_x_axis")
   .call(hour_x_axis);
 
+  // chart.selectAll("circle")
+  // .data(data)
+  // .enter()
+  // .append("circle")
+  // .attr("cx", function(d){return x_scale(format.parse(d.time)) + margin.left} )
+  // .attr("cy", function(d){return y_scale(   hour_conv(d)  )} )
+  // .attr("r", 2);
+
   chart.selectAll("circle")
   .data(data)
   .enter()
@@ -123,6 +137,49 @@ d3.json("log.json", function(jsonfile){
   .attr("cx", function(d){return x_scale(format.parse(d.time)) + margin.left} )
   .attr("cy", function(d){return y_scale(   hour_conv(d)  )} )
   .attr("r", 2);
+
+
+  var zoom = d3.behavior.zoom()
+  .scaleExtent([1, 1])
+  .x(x_scale)
+  .on('zoom', function() {
+
+    // bound the scrolling
+    var t = zoom.translate(),
+        tx = t[0],
+        ty = t[1];
+
+    tx = Math.min( 0, tx );
+
+    zoom.translate([tx, ty]);
+
+    // remove x elements and redraw
+    chart.selectAll("circle").remove();
+    chart.select(".x_axis").remove();
+    chart.select(".hour_x_axis").remove();
+    // should refactor this into a redraw method or a closure with params
+    chart.selectAll("circle")
+    .data(data)
+    .enter()
+    .append("circle")
+    .attr("cx", function(d){return x_scale(format.parse(d.time)) + margin.left} )
+    .attr("cy", function(d){return y_scale(   hour_conv(d)  )} )
+    .attr("r", 2);
+
+    chart.append("g")
+    .attr("transform", "translate(20," + (height-padding) + ")")
+    .attr("class", "x_axis")
+    .call(x_axis);
+
+    chart.append("g")
+    .attr("transform", "translate(20," + (height-padding) + ")")
+    .attr("class", "hour_x_axis")
+    .call(hour_x_axis);
+
+  });
+
+  chart.call(zoom);
+
 
   // var bar = chart.selectAll("g").data(data).enter().append("g").attr("transform", function(d,i){ return "translate(0," + i * barWidth + ")";});
 
@@ -134,6 +191,7 @@ d3.json("log.json", function(jsonfile){
     //.text(function(d){ return d.activity });
 
 });
+
 
 function type(d){
   d.value = +d.value;
@@ -155,7 +213,7 @@ function hour_conv(data){
 </script>
 
 <div>
-  This chart shows a dot for every crime committed. Each tick mark is one hour.  
+  This chart shows a dot for every crime committed. Each tick mark is one hour. The data points are grouped by hour of crime and the graph scrolls fully.<br><br> 
   The code lives at <a href="https://github.com/Naphtha/McGruff">Github</a>. Also if you have any questions on how to do this, feel free to email me firstname.lastname@gmail.com and I can show you some tutorials which I found immensely helpful.
 </div>
 
